@@ -8,6 +8,11 @@ enum Mode {
 
 public class Main {
 	static String convert(int decimal, int base) {
+		if (decimal == 0) return "0";
+		
+		boolean isNegative = decimal < 0;
+		decimal = Math.abs(decimal);
+		
 		char[] digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 		String result = "";
 		
@@ -16,17 +21,23 @@ public class Main {
 			decimal /= base;
 		}
 		
-		return result;
+		return isNegative ? "-" + result : result;
 	}
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		Mode mode = Mode.BINARY;
 		
+		System.out.println("OPTIONS:");
+		System.out.println("  binary");
+		System.out.println("  octal");
+		System.out.println("  hexadecimal");
+		System.out.println("  exit\n");
+		
 		inputLoop: while (true) {
-			System.out.print(mode + ": ");
-			String input = scanner.nextLine();
+			System.out.print(String.format("(%s): ", mode));
+			String input = scanner.nextLine().trim();
 			
-			switch (input) {
+			switch (input.toUpperCase()) {
 				case "EXIT":
 					break inputLoop;
 				case "BINARY":
